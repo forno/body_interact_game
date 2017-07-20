@@ -2,7 +2,7 @@
 #include <rviz_visual_tools/rviz_visual_tools.h>
 #include <tf2_eigen/tf2_eigen.h>
 
-#include "body_interact_game/body_interact_game.hpp"
+#include "body_interact_game/body_analizer.hpp"
 
 int main(int argc, char** argv)
 {
