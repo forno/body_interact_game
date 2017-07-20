@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(body_interact_game)
 
-add_compile_options(-std=c++11)
+add_compile_options(-std=c++14)
 
 set(DEPEND_PACKAGES
   roscpp
@@ -9,6 +9,7 @@ set(DEPEND_PACKAGES
   tf2
   tf2_eigen
   tf2_ros
+  rviz_visual_tools # for debuging
 )
 find_package(catkin REQUIRED COMPONENTS
   ${DEPEND_PACKAGES}
