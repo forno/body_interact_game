@@ -1,5 +1,19 @@
 #include <body_interact_game/body_analizer.hpp>
 
+namespace
+{
+
+constexpr auto pi {3.141592653589793};
+
+inline Eigen::AngleAxisd get_yaw_inverse_matrix(Eigen::Affine3d pos) noexcept
+{
+  const auto ypr {pos.rotation().eulerAngles(2, 0, 1)};
+  const auto yaw_angle {ypr(0) < pi / 2 ? ypr(2) : ypr(2) - pi};
+  return {-yaw_angle, Eigen::Vector3d::UnitY()};
+}
+
+}
+
 body_analizer::body_analizer(std::string root, std::size_t target_number)
   : root_ {root},
     target_number_ {std::to_string(target_number)},
