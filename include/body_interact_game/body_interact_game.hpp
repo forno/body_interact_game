@@ -32,7 +32,7 @@ public:
     visualizer(pg_.get_left_knee(), rviz_visual_tools::GREEN);
 
     Eigen::Affine3d text_pos {};
-    text_pos.translation() = Eigen::Vector3d::UnitY() * 1.1;
+    text_pos.translation() = Eigen::Vector3d::UnitY() * 0.5;
     visualizer(text_pos, "score : " + std::to_string(s_.get_last()));
   }
 };
