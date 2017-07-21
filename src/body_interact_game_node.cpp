@@ -13,7 +13,7 @@ int main(int argc, char** argv)
   ros::Rate r {5};
 
   body_analizer ba {"openni_coordinater", 1};
-  pose_generator_config pgc {0.9, 0.523599, 0.1, 0, 0.5, 0.523599, 0.1};
+  pose_generator_config pgc {0.9, 0.523599, 0.1, 0, 0.5, 0.349066, 0.1};
   pose_generator pg {pgc};
 
   std::size_t count {0};
