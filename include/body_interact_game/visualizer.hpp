@@ -2,7 +2,7 @@
 #define VISUALIZER_H
 
 #include <memory>
-#include <unitry>
+#include <utility>
 
 #include <ros/ros.h>
 #include <rviz_visual_tools/rviz_visual_tools.h>
@@ -11,10 +11,10 @@
 
 class visualizer
 {
-  std::shard_ptr<rviz_visual_tools::RvizVisualTools> rvtp_;
+  std::shared_ptr<rviz_visual_tools::RvizVisualTools> rvtp_;
 
 public:
-  visualizer(std::shard_ptr<rviz_visual_tools::RvizVisualTools> rvtp)
+  visualizer(std::shared_ptr<rviz_visual_tools::RvizVisualTools> rvtp)
     : rvtp_ {std::move(rvtp)}
   {
   }
