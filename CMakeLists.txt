@@ -40,6 +40,7 @@ include_directories(
 add_library(${PROJECT_NAME}
   src/${PROJECT_NAME}/body_interact_game.cpp
   src/${PROJECT_NAME}/body_analizer.cpp
+  src/${PROJECT_NAME}/pose_generator.cpp
 )
 
 add_executable(${PROJECT_NAME}_node src/${PROJECT_NAME}_node.cpp)
