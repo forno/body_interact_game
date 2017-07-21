@@ -4,12 +4,14 @@
 
 #include "body_interact_game/body_analizer.hpp"
 #include "body_interact_game/pose_generator.hpp"
+#include "body_interact_game/visualizer.hpp"
 
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "body_interact_game_node");
   ros::NodeHandle n;
-  rviz_visual_tools::RvizVisualTools rvt {"openni_coordinater", "/rviz_visual_makers"};
+  rviz_visual_tools::RvizVisualToolsPtr rvtp {new rviz_visual_tools::RvizVisualTools{"openni_coordinater", "/rviz_visual_makers"}};
+  visualizer v {rvtp};
   ros::Rate r {5};
 
   body_analizer ba {"openni_coordinater", 1};
@@ -24,29 +26,14 @@ int main(int argc, char** argv)
     try {
       ba.update();
 
-      rvt.deleteAllMarkers();
-      rvt.publishArrow(Eigen::Affine3d{Eigen::Quaterniond::FromTwoVectors(Eigen::Vector3d::UnitX(), ba.get_head())},
-                       rviz_visual_tools::BLUE, rviz_visual_tools::LARGE);
-//      rvt.publishArrow(Eigen::Affine3d{Eigen::Quaterniond::FromTwoVectors(Eigen::Vector3d::UnitX(), ba.get_right_hand())},
-//                       rviz_visual_tools::BLUE, rviz_visual_tools::LARGE);
-//      rvt.publishArrow(Eigen::Affine3d{Eigen::Quaterniond::FromTwoVectors(Eigen::Vector3d::UnitX(), ba.get_left_hand())},
-//                       rviz_visual_tools::BLUE, rviz_visual_tools::LARGE);
-      rvt.publishArrow(Eigen::Affine3d{Eigen::Quaterniond::FromTwoVectors(Eigen::Vector3d::UnitX(), ba.get_right_knee())},
-                       rviz_visual_tools::BLUE, rviz_visual_tools::LARGE);
-      rvt.publishArrow(Eigen::Affine3d{Eigen::Quaterniond::FromTwoVectors(Eigen::Vector3d::UnitX(), ba.get_left_knee())},
-                       rviz_visual_tools::BLUE, rviz_visual_tools::LARGE);
-      rvt.publishArrow(Eigen::Affine3d{Eigen::Quaterniond::FromTwoVectors(Eigen::Vector3d::UnitX(), pg.get_head())},
-                       rviz_visual_tools::RED, rviz_visual_tools::LARGE);
-//      rvt.publishArrow(Eigen::Affine3d{Eigen::Quaterniond::FromTwoVectors(Eigen::Vector3d::UnitX(), pg.get_right_hand())},
-//                       rviz_visual_tools::RED, rviz_visual_tools::LARGE);
-//      rvt.publishArrow(Eigen::Affine3d{Eigen::Quaterniond::FromTwoVectors(Eigen::Vector3d::UnitX(), pg.get_left_hand())},
-//                       rviz_visual_tools::RED, rviz_visual_tools::LARGE);
-      rvt.publishArrow(Eigen::Affine3d{Eigen::Quaterniond::FromTwoVectors(Eigen::Vector3d::UnitX(), pg.get_right_knee())},
-                       rviz_visual_tools::GREEN, rviz_visual_tools::LARGE);
-      rvt.publishArrow(Eigen::Affine3d{Eigen::Quaterniond::FromTwoVectors(Eigen::Vector3d::UnitX(), pg.get_left_knee())},
-                       rviz_visual_tools::RED, rviz_visual_tools::LARGE);
+      v(ba.get_head(), rviz_visual_tools::BLUE);
+      v(ba.get_right_knee(), rviz_visual_tools::BLUE);
+      v(ba.get_left_knee(), rviz_visual_tools::BLUE);
+      v(pg.get_head(), rviz_visual_tools::GREEN);
+      v(pg.get_right_knee(), rviz_visual_tools::GREEN);
+      v(pg.get_left_knee(), rviz_visual_tools::GREEN);
 
-      rvt.trigger();
+      v.update();
     } catch (tf2::TransformException& e) {
       ROS_WARN_STREAM(e.what());
     }
