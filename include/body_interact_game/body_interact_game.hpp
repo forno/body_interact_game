@@ -5,11 +5,13 @@
 
 #include "body_interact_game/body_analizer.hpp"
 #include "body_interact_game/pose_generator.hpp"
+#include "body_interact_game/scorer.hpp"
 
 class interact_game
 {
   body_analizer ba_;
   pose_generator pg_;
+  scorer s_;
   std::size_t interval_;
 
 public:
