@@ -1,5 +1,7 @@
 #include <body_interact_game/body_analizer.hpp>
 
+#include <Eigen/SVD>
+
 namespace
 {
 

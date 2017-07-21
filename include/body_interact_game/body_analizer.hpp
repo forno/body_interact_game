@@ -8,7 +8,6 @@
 #include <tf2_ros/transform_listener.h>
 
 #include <Eigen/Geometry>
-#include <Eigen/SVD>
 
 class body_analizer
 {
