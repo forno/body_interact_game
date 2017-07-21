@@ -1,19 +1,15 @@
 #include "body_interact_game/body_interact_game.hpp"
 
-interact_game::interact_game(const std::string& root, std::size_t number, const pose_generator_config& pgc, std::size_t interval)
+interact_game::interact_game(ros::NodeHandle& n, const std::string& root, std::size_t number)
   : ba_ {root, number},
-    pg_ {pgc},
-    s_ {},
-    interval_ {interval}
+    pr_ {n},
+    s_ {}
 {
 }
 
 void interact_game::update()
 {
-  static std::size_t count {0};
   ba_.update();
-  if (!(count = (count + 1) % 30)) {
-    s_(ba_, pg_);
-    pg_.update();
-  }
+  //pr_.update();
+  s_(ba_, pr_);
 }

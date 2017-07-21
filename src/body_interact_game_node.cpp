@@ -23,8 +23,7 @@ int main(int argc, char** argv)
   visualizer v {std::make_shared<rviz_visual_tools::RvizVisualTools>(root, root + std::to_string(target_number))};
   ros::Rate r {5};
 
-  pose_generator_config pgc {0.9, 0.523599, 0.1, 0, 0.5, 0.349066, 0.1};
-  interact_game ig {root, static_cast<std::size_t>(target_number), pgc, 30};
+  interact_game ig {n, root, static_cast<std::size_t>(target_number)};
 
   while (ros::ok()) {
     try {
