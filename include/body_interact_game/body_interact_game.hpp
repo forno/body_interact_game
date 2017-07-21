@@ -22,12 +22,12 @@ public:
   template<typename T>
   void render(T visualizer) const
   {
-      visualizer(ba_.get_head(), rviz_visual_tools::BLUE);
-      visualizer(ba_.get_right_knee(), rviz_visual_tools::BLUE);
-      visualizer(ba_.get_left_knee(), rviz_visual_tools::BLUE);
-      visualizer(pg_.get_head(), rviz_visual_tools::GREEN);
-      visualizer(pg_.get_right_knee(), rviz_visual_tools::GREEN);
-      visualizer(pg_.get_left_knee(), rviz_visual_tools::GREEN);
+    visualizer(ba_.get_head(), rviz_visual_tools::BLUE);
+    visualizer(ba_.get_right_knee(), rviz_visual_tools::BLUE);
+    visualizer(ba_.get_left_knee(), rviz_visual_tools::BLUE);
+    visualizer(pg_.get_head(), rviz_visual_tools::GREEN);
+    visualizer(pg_.get_right_knee(), rviz_visual_tools::GREEN);
+    visualizer(pg_.get_left_knee(), rviz_visual_tools::GREEN);
   }
 };
 
