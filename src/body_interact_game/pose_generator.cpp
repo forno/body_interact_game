@@ -4,6 +4,7 @@ namespace
 {
 
 std::bernoulli_distribution half_dist {0.5};
+constexpr auto center_mass_calibration {0.8};
 
 }
 
@@ -21,8 +22,8 @@ void pose_generator::update()
     const auto legs_angle {both_leg_dist_(engine_)};
     const auto body_angle {body_dist_(engine_)};
     head_ = Eigen::AngleAxisd{body_angle, Eigen::Vector3d::UnitZ()} * Eigen::Vector3d::UnitY();
-    right_knee_ = Eigen::AngleAxisd{legs_angle, Eigen::Vector3d::UnitZ()} * -Eigen::Vector3d::UnitY();
-    left_knee_ = Eigen::AngleAxisd{-legs_angle, Eigen::Vector3d::UnitZ()} * -Eigen::Vector3d::UnitY();
+    right_knee_ = Eigen::AngleAxisd{legs_angle + body_angle * center_mass_calibration, Eigen::Vector3d::UnitZ()} * -Eigen::Vector3d::UnitY();
+    left_knee_ = Eigen::AngleAxisd{-legs_angle + body_angle * center_mass_calibration, Eigen::Vector3d::UnitZ()} * -Eigen::Vector3d::UnitY();
 
   } else { // one side leg pose
     const auto oneside_angle {one_side_dist_(engine_)};
