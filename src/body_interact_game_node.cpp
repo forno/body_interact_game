@@ -11,16 +11,18 @@ int main(int argc, char** argv)
   ros::NodeHandle n;
 
   std::string root {"openni_coordinater"};
+  int target_number {1};
   {
     ros::NodeHandle pn {"~"};
     pn.getParam("root", root);
+    pn.getParam("num", target_number);
   }
 
   visualizer v {std::make_shared<rviz_visual_tools::RvizVisualTools>(root, "/rviz_visual_makers")};
   ros::Rate r {5};
 
   pose_generator_config pgc {0.9, 0.523599, 0.1, 0, 0.5, 0.349066, 0.1};
-  interact_game ig {"openni_coordinater", 1, pgc, 30};
+  interact_game ig {root, target_number, pgc, 30};
 
   while (ros::ok()) {
     try {
