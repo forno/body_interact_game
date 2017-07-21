@@ -21,19 +21,19 @@ void pose_generator::update()
     const auto legs_angle {both_leg_dist_(engine_)};
     const auto body_angle {body_dist_(engine_)};
     head_ = Eigen::AngleAxisd{body_angle, Eigen::Vector3d::UnitZ()} * Eigen::Vector3d::UnitY();
-    right_knee_ = Eigen::AngleAxisd{-legs_angle, Eigen::Vector3d::UnitZ()} * -Eigen::Vector3d::UnitY();
-    left_knee_ = Eigen::AngleAxisd{legs_angle, Eigen::Vector3d::UnitZ()} * -Eigen::Vector3d::UnitY();
+    right_knee_ = Eigen::AngleAxisd{legs_angle, Eigen::Vector3d::UnitZ()} * -Eigen::Vector3d::UnitY();
+    left_knee_ = Eigen::AngleAxisd{-legs_angle, Eigen::Vector3d::UnitZ()} * -Eigen::Vector3d::UnitY();
 
   } else { // one side leg pose
     const auto oneside_angle {one_side_dist_(engine_)};
     if (half_dist(engine_)) { // left side stand
       left_knee_ = -Eigen::Vector3d::UnitY();
-      right_knee_ = Eigen::AngleAxisd{-oneside_angle, Eigen::Vector3d::UnitZ()} * -Eigen::Vector3d::UnitY();
-      head_ = Eigen::AngleAxisd{-oneside_angle, Eigen::Vector3d::UnitZ()} * Eigen::Vector3d::UnitY();
+      right_knee_ = Eigen::AngleAxisd{oneside_angle, Eigen::Vector3d::UnitZ()} * -Eigen::Vector3d::UnitY();
+      head_ = Eigen::AngleAxisd{oneside_angle, Eigen::Vector3d::UnitZ()} * Eigen::Vector3d::UnitY();
     } else { // right side stand
       right_knee_ = -Eigen::Vector3d::UnitY();
-      left_knee_ = Eigen::AngleAxisd{oneside_angle, Eigen::Vector3d::UnitZ()} * -Eigen::Vector3d::UnitY();
-      head_ = Eigen::AngleAxisd{oneside_angle, Eigen::Vector3d::UnitZ()} * Eigen::Vector3d::UnitY();
+      left_knee_ = Eigen::AngleAxisd{-oneside_angle, Eigen::Vector3d::UnitZ()} * -Eigen::Vector3d::UnitY();
+      head_ = Eigen::AngleAxisd{-oneside_angle, Eigen::Vector3d::UnitZ()} * Eigen::Vector3d::UnitY();
     }
   }
 }
