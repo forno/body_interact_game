@@ -1,6 +1,22 @@
 <launch>
-  <node name="tracker" pkg="openni_tracker" type="openni_tracker" />
+  <node name="tracker" pkg="openni_tracker" type="openni_tracker" required="true" />
   <node name="coordinater" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0  1.57079632679 0 1.57079632679 openni_depth_frame openni_coordinater" />
 
-  <node name="gamer" pkg="body_interact_game" type="body_interact_game_node" output="screen" />
+  <node name="user1_coordinater" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0 0 0 0 openni_coordinater root1" />
+  <node name="gamer1" pkg="body_interact_game" type="body_interact_game_node">
+    <param name="root" value="root1" />
+    <param name="num"  value="1" />
+  </node>
+
+  <node name="user2_coordinater" pkg="tf2_ros" type="static_transform_publisher" args="1 0 0 0 0 0 openni_coordinater root2" />
+  <node name="gamer2" pkg="body_interact_game" type="body_interact_game_node">
+    <param name="root" value="root2" />
+    <param name="num"  value="2" />
+  </node>
+
+  <node name="user3_coordinater" pkg="tf2_ros" type="static_transform_publisher" args="-1 0 0 0 0 0 openni_coordinater root3" />
+  <node name="gamer3" pkg="body_interact_game" type="body_interact_game_node">
+    <param name="root" value="root3" />
+    <param name="num"  value="3" />
+  </node>
 </launch>
