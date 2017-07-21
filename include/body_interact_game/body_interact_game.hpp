@@ -7,6 +7,8 @@
 #include "body_interact_game/pose_generator.hpp"
 #include "body_interact_game/scorer.hpp"
 
+#include <Eigen/Geometry>
+
 class interact_game
 {
   body_analizer ba_;
@@ -28,6 +30,10 @@ public:
     visualizer(pg_.get_head(), rviz_visual_tools::GREEN);
     visualizer(pg_.get_right_knee(), rviz_visual_tools::GREEN);
     visualizer(pg_.get_left_knee(), rviz_visual_tools::GREEN);
+
+    Eigen::Affine3d text_pos {};
+    text_pos.translation() = Eigen::Vector3d::UnitY() * 1.1;
+    visualizer(text_pos, "score : " + std::to_string(s_.get_last()));
   }
 };
 
