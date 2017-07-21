@@ -22,6 +22,11 @@ public:
                         color, rviz_visual_tools::LARGE);
   }
 
+  void operator()(Eigen::Affine3d pos, std::string s) const
+  {
+    rvtp_->publishText(pos, s, rviz_visual_tools::WHITE, rviz_visual_tools::XLARGE);
+  }
+
   void update() const
   {
     rvtp_->trigger();
