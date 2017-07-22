@@ -14,7 +14,6 @@ class interact_game
   body_analizer ba_;
   pose_receiver pr_;
   scorer s_;
-  std::size_t interval_;
 
 public:
   interact_game(ros::NodeHandle& n, const std::string& root, std::size_t number);
