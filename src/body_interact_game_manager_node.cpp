@@ -19,7 +19,7 @@ public:
     : scores_(topics.size())
   {
     for (std::size_t i {0}; i < topics.size(); ++i)
-      subs_.emplace_back(n.subscribe<std_msgs::Float64>(topics[i], 3, [index = i, this](const std_msgs::Float64ConstPtr msgp) {
+      subs_.emplace_back(n.subscribe<std_msgs::Float64>(topics[i], 1, [index = i, this](const std_msgs::Float64ConstPtr msgp) {
         ROS_INFO_STREAM("receive score : " << subs_[index].getTopic() << " / " << msgp->data);
         scores_[index] = msgp->data;
       }));
@@ -68,6 +68,7 @@ int main(int argc, char** argv)
   ros::Rate r {1. / 6};
 
   while (ros::ok()) {
+    ros::spinOnce();
     pg.update();
     ROS_INFO_STREAM("max score : " << sh.get_max_topic() << " / " << sh.get_max_score());
     head_pub.publish(tf2::toMsg(pg.get_head()));
