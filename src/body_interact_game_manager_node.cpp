@@ -1,9 +1,10 @@
 #include <algorithm>
+#include <cassert>
 #include <vector>
 
 #include <ros/ros.h>
-#include <std_msgs/Float64.h>
 #include <geometry_msgs/Point.h>
+#include <std_msgs/Float64.h>
 #include <tf2_eigen/tf2_eigen.h>
 
 #include "body_interact_game/pose_generator.hpp"
@@ -11,18 +12,21 @@
 class score_holder
 {
   std::vector<double> scores_;
-  std::vector<std::string> topics_;
   std::vector<ros::Subscriber> subs_ {};
 
 public:
-  score_holder(ros::NodeHandle n, const std::vector<std::string>& topics)
-    : scores_(topics.size()),
-      topics_ {topics}
+  score_holder(ros::NodeHandle& n, const std::vector<std::string>& topics)
+    : scores_(topics.size())
   {
     for (std::size_t i {0}; i < topics.size(); ++i)
-      subs_.emplace_back(n.subscribe<std_msgs::Float64>(topics[i], 1, [index = i, this](const std_msgs::Float64ConstPtr msgp) {
+      subs_.emplace_back(n.subscribe<std_msgs::Float64>(topics[i], 3, [index = i, this](const std_msgs::Float64ConstPtr msgp) {
+        ROS_INFO_STREAM("receive score : " << subs_[index].getTopic() << " / " << msgp->data);
         scores_[index] = msgp->data;
       }));
+
+    assert(subs_.size() == topics.size());
+    for (const auto& s : subs_)
+      assert(s);
   }
 
   double get_max_score() const noexcept
@@ -32,7 +36,7 @@ public:
 
   std::string get_max_topic() const noexcept
   {
-    return topics_[std::max_element(scores_.begin(), scores_.end()) - scores_.begin()];
+    return subs_[std::max_element(scores_.begin(), scores_.end()) - scores_.begin()].getTopic();
   }
 };
 
@@ -52,8 +56,10 @@ int main(int argc, char** argv)
     pn.getParam("scores", score_topics);
   }
 
-  if (score_topics.empty())
+  if (score_topics.empty()) {
+    ROS_ERROR_STREAM("Need scores parameter");
     return 0;
+  }
 
   score_holder sh {n, score_topics};
   pose_generator_config pgc {0.9, 0.523599, 0.1, 0, 0.5, 0.349066, 0.1};
