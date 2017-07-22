@@ -6,10 +6,11 @@ add_compile_options(-std=c++14)
 set(DEPEND_PACKAGES
   roscpp
   geometry_msgs
+  rviz_visual_tools # for debuging
+  std_msgs
   tf2
   tf2_eigen
   tf2_ros
-  rviz_visual_tools # for debuging
 )
 find_package(catkin REQUIRED COMPONENTS
   ${DEPEND_PACKAGES}

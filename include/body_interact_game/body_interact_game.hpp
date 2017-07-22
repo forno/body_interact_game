@@ -1,6 +1,9 @@
 #ifndef BODY_INTERACT_GAME_H
 #define BODY_INTERACT_GAME_H
 
+#include <string>
+
+#include <ros/ros.h>
 #include <rviz_visual_tools/rviz_visual_tools.h>
 
 #include "body_interact_game/body_analizer.hpp"
@@ -14,6 +17,7 @@ class interact_game
   body_analizer ba_;
   pose_receiver pr_;
   scorer s_;
+  ros::Publisher score_pub_;
 
 public:
   interact_game(ros::NodeHandle& n, const std::string& root, std::size_t number);
