@@ -20,7 +20,6 @@ public:
   {
     for (std::size_t i {0}; i < topics.size(); ++i)
       subs_.emplace_back(n.subscribe<std_msgs::Float64>(topics[i], 1, [index = i, this](const std_msgs::Float64ConstPtr msgp) {
-        ROS_INFO_STREAM("receive score : " << subs_[index].getTopic() << " / " << msgp->data);
         scores_[index] = msgp->data;
       }));
 
@@ -62,7 +61,7 @@ int main(int argc, char** argv)
   }
 
   score_holder sh {n, score_topics};
-  pose_generator_config pgc {0.9, 0.523599, 0.1, 0, 0.5, 0.349066, 0.1};
+  pose_generator_config pgc {0.9, 0.349066, 0.1, 0, 0.4, 0.349066, 0.1};
   pose_generator pg {pgc};
 
   ros::Rate r {1. / 6};
