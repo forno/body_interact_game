@@ -45,6 +45,7 @@ int main(int argc, char** argv)
   ros::Publisher left_knee_pub {n.advertise<geometry_msgs::Point>("left_knee", 1)};
   ros::Publisher right_hand_pub {n.advertise<geometry_msgs::Point>("right_hand", 1)};
   ros::Publisher left_hand_pub {n.advertise<geometry_msgs::Point>("right_hand", 1)};
+
   std::vector<std::string> score_topics {};
   {
     ros::NodeHandle pn {"~"};
@@ -54,6 +55,7 @@ int main(int argc, char** argv)
   if (score_topics.empty())
     return 0;
 
+  score_holder sh {n, score_topics};
   pose_generator_config pgc {0.9, 0.523599, 0.1, 0, 0.5, 0.349066, 0.1};
   pose_generator pg {pgc};
 
@@ -61,6 +63,7 @@ int main(int argc, char** argv)
 
   while (ros::ok()) {
     pg.update();
+    ROS_INFO_STREAM("max score : " << sh.get_max_topic() << " / " << sh.get_max_score());
     head_pub.publish(tf2::toMsg(pg.get_head()));
     right_knee_pub.publish(tf2::toMsg(pg.get_right_knee()));
     left_knee_pub.publish(tf2::toMsg(pg.get_left_knee()));
