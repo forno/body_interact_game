@@ -41,7 +41,6 @@ include_directories(
 add_library(${PROJECT_NAME}
   src/${PROJECT_NAME}/body_interact_game.cpp
   src/${PROJECT_NAME}/body_analizer.cpp
-  src/${PROJECT_NAME}/pose_generator.cpp
 )
 
 add_executable(${PROJECT_NAME}_node src/${PROJECT_NAME}_node.cpp)
@@ -49,6 +48,12 @@ add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catk
 target_link_libraries(${PROJECT_NAME}_node
   ${catkin_LIBRARIES}
   ${PROJECT_NAME}
+)
+
+add_executable(body_interact_game_manager_node src/body_interact_game_manager_node.cpp src/${PROJECT_NAME}/pose_generator.cpp)
+add_dependencies(body_interact_game_manager_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(body_interact_game_manager_node
+  ${catkin_LIBRARIES}
 )
 
 #############
