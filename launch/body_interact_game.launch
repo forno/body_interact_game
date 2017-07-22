@@ -2,7 +2,9 @@
   <node name="tracker" pkg="openni_tracker" type="openni_tracker" required="true" />
   <node name="coordinater" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0  1.57079632679 0 1.57079632679 openni_depth_frame openni_coordinater" />
 
-  <node name="pose_generator" pkg="body_interact_game" type="body_interact_game_manager_node" output="screen" />
+  <node name="pose_generator" pkg="body_interact_game" type="body_interact_game_manager_node" output="screen">
+    <rosparam param="scores">[score_1, score_2, score_3]</rosparam>
+  </node>
 
   <node name="user1_coordinater" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0 0 0 0 openni_coordinater root1" />
   <node name="gamer1" pkg="body_interact_game" type="body_interact_game_node">
