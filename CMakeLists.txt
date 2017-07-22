@@ -12,8 +12,10 @@ set(DEPEND_PACKAGES
   tf2_eigen
   tf2_ros
 )
+
 find_package(catkin REQUIRED COMPONENTS
   ${DEPEND_PACKAGES}
+  message_generation
 )
 
 find_package(Eigen3 REQUIRED)
@@ -21,10 +23,20 @@ find_package(Eigen3 REQUIRED)
 ###################################
 ## catkin specific configuration ##
 ###################################
+add_message_files(
+  FILES
+  Score.msg
+)
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
+
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES body_interact_game
-  CATKIN_DEPENDS ${DEPEND_PACKAGES}
+  CATKIN_DEPENDS ${DEPEND_PACKAGES} message_runtime
   DEPENDS Eigen3
 )
 
