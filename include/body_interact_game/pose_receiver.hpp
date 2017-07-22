@@ -22,7 +22,11 @@ class pose_receiver
 
 public:
   pose_receiver(ros::NodeHandle& n)
-    : head_sub_ {n.subscribe("head", 1, &pose_receiver::head_cb, this)}
+    : head_sub_ {n.subscribe("head", 1, &pose_receiver::head_cb, this)},
+      right_knee_sub_ {n.subscribe("right_knee", 1, &pose_receiver::right_knee_cb, this)},
+      left_knee_sub_ {n.subscribe("left_knee", 1, &pose_receiver::left_knee_cb, this)},
+      right_hand_sub_ {n.subscribe("right_hand", 1, &pose_receiver::right_hand_cb, this)},
+      left_hand_sub_ {n.subscribe("right_hand", 1, &pose_receiver::right_hand_cb, this)}
   {
   }
 
@@ -54,6 +58,27 @@ public:
 private:
   void head_cb(const geometry_msgs::PointConstPtr& msg) noexcept
   {
+    tf2::fromMsg(*msg, head_);
+  }
+
+  void right_knee_cb(const geometry_msgs::PointConstPtr& msg) noexcept
+  {
+    tf2::fromMsg(*msg, right_knee_);
+  }
+
+  void left_knee_cb(const geometry_msgs::PointConstPtr& msg) noexcept
+  {
+    tf2::fromMsg(*msg, left_knee_);
+  }
+
+  void right_hand_cb(const geometry_msgs::PointConstPtr& msg) noexcept
+  {
+    tf2::fromMsg(*msg, right_hand_);
+  }
+
+  void left_hand_cb(const geometry_msgs::PointConstPtr& msg) noexcept
+  {
+    tf2::fromMsg(*msg, left_hand_);
   }
 };
 
