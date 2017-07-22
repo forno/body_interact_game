@@ -3,6 +3,7 @@
 #include <vector>
 
 #include <ros/ros.h>
+#include <body_interact_game/Score.h>
 #include <geometry_msgs/Point.h>
 #include <std_msgs/Float64.h>
 #include <tf2_eigen/tf2_eigen.h>
@@ -48,6 +49,7 @@ int main(int argc, char** argv)
   ros::Publisher left_knee_pub {n.advertise<geometry_msgs::Point>("left_knee", 1)};
   ros::Publisher right_hand_pub {n.advertise<geometry_msgs::Point>("right_hand", 1)};
   ros::Publisher left_hand_pub {n.advertise<geometry_msgs::Point>("right_hand", 1)};
+  ros::Publisher score_pub {n.advertise<body_interact_game::Score>("max_score", 1)};
 
   std::vector<std::string> score_topics {};
   {
@@ -69,7 +71,10 @@ int main(int argc, char** argv)
   while (ros::ok()) {
     ros::spinOnce();
     pg.update();
-    ROS_INFO_STREAM("max score : " << sh.get_max_topic() << " / " << sh.get_max_score());
+    body_interact_game::ScorePtr sp;
+    sp->name = sh.get_max_topic();
+    sp->score = sh.get_max_score();
+    score_pub.publish(sp);
     head_pub.publish(tf2::toMsg(pg.get_head()));
     right_knee_pub.publish(tf2::toMsg(pg.get_right_knee()));
     left_knee_pub.publish(tf2::toMsg(pg.get_left_knee()));
