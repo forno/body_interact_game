@@ -23,4 +23,6 @@
     <param name="root" value="root3" />
     <param name="num"  value="3" />
   </node>
+
+  <node name="score_viewer" pkg="body_interact_game" type="score_viewer_node" />
 </launch>
