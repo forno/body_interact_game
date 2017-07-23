@@ -68,6 +68,12 @@ target_link_libraries(body_interact_game_manager_node
   ${catkin_LIBRARIES}
 )
 
+add_executable(score_viewer_node src/score_viewer_node.cpp src/${PROJECT_NAME}/pose_generator.cpp)
+add_dependencies(score_viewer_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(score_viewer_node
+  ${catkin_LIBRARIES}
+)
+
 #############
 ## Install ##
 #############
