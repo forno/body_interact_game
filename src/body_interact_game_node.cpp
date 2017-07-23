@@ -32,7 +32,11 @@ int main(int argc, char** argv)
       ig.render(v);
       v.update();
     } catch (tf2::TransformException& e) {
-      ROS_WARN_STREAM(e.what());
+      static std::string last_err {};
+      if (last_err != e.what()) {
+        last_err = e.what();
+        ROS_WARN_STREAM(e.what());
+      }
     }
     r.sleep();
   }
