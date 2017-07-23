@@ -71,7 +71,7 @@ int main(int argc, char** argv)
   while (ros::ok()) {
     ros::spinOnce();
     pg.update();
-    body_interact_game::ScorePtr sp;
+    body_interact_game::ScorePtr sp {new body_interact_game::Score{}};
     sp->name = sh.get_max_topic();
     sp->score = sh.get_max_score();
     score_pub.publish(sp);
